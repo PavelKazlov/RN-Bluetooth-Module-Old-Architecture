@@ -7,8 +7,17 @@
 
 import { BondedDeviceSectionList } from '@/components'
 import RTNBluetooth from '@/nativeMoules/BluetoothModule'
-import React, { useState } from 'react'
-import { Button, SafeAreaView, StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import {
+  Button,
+  NativeEventEmitter,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native'
 
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 
@@ -61,6 +70,25 @@ function App(): JSX.Element {
     const res = await RTNBluetooth?.startAcceptServer()
     console.log({ res })
   }
+
+  const checkBlueToothSupport = async () => {
+    const res = await RTNBluetooth?.checkBluetoothSupport()
+    console.log(res)
+    const isEnabled = await RTNBluetooth?.enableBluetooth()
+    console.log({ isEnabled })
+  }
+
+  useEffect(() => {
+    const bluetoothEventEmitter = new NativeEventEmitter(RTNBluetooth as any)
+    const bluetoothStatus = bluetoothEventEmitter.addListener('BLUETOOTH_ENABLED', (event) => {
+      console.log(event)
+    })
+    return () => bluetoothStatus.remove()
+  }, [])
+
+  useEffect(() => {
+    checkBlueToothSupport()
+  }, [])
 
   return (
     <SafeAreaView style={backgroundStyle}>

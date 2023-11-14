@@ -56,8 +56,8 @@ import java.util.UUID;
 
 class BlcManager extends ReactContextBaseJavaModule implements LifecycleEventListener, ActivityEventListener {
     public static final String LOG_TAG = "ReactNativeBlcManager";
+//    private final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private final UUID MY_UUID = UUID.fromString("6088D2B3-983A-4EED-9F94-5AD1256816B7");
-
     private static final int ENABLE_REQUEST = 539;
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothManager bluetoothManager;
